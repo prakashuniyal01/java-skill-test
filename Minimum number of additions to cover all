@@ -1,0 +1,47 @@
+In a special batch of N students, which focuses on competitive programming. There are M teaching assistants and the N students are sitting in a linear arrangement of chairs. The chairs are numbered 1 to N, from left to right. The TAs are standing behind M distinct chairs. It is given that if a TA is standing behind chair numbered X, then TA can handle doubts of students on chairs numbered X-K to X+K.
+Going by this info, it is obvious that some students may enjoy support from more than one TA and there may be some students who have not been assigned to any TA.
+Your task is to find minimum number of TAs to be added, so that each student gets support of at least one TA.
+Input Format:
+The first line of input contains a single integer, that denotes the value of N (1 <= N <= 1000).
+The following line of input contains another integer, that denotes the value of M (1 <= M <= N).
+The following line of input contains another integer, that denotes the value of K (0 <= K <= N).
+Each of the following M lines contains an integer, that denotes the number of chair, behind which a particular TA is standing. These numbers represent the positions of TAs and are sorted in ascending order. The numbers will be distinct and will lie in the range: [1, N].
+Constraints:
+Time Limit: 1 second
+Output Format:
+Print the minimum number of TAs that needs to be added, as described in the task. 
+Sample Input 1:
+5
+2
+2
+1
+5
+Sample Output 1:
+0
+Explanation:
+As all the students are covered by present lot of TAs, therefore, no more TAs needs to be added.
+/////////////////// code in python /////////
+## Read input as specified in the question.
+## Print output as specified in the question.
+#Write your code here
+def minTAs(n, m, k, arr):
+    covered = [0] * (n + 1)
+    for i in range(m):
+        for j in range(max(1, arr[i] - k), min(n, arr[i] + k) + 1):
+            covered[j] = 1
+
+    min_tas = 0
+    i = 1
+    while i <= n:
+        if covered[i] == 0:
+            min_tas += 1
+            i += 2 * k + 1
+        else:
+            i += 1
+    return min_tas
+
+n = int(input().strip())
+m = int(input().strip())
+k = int(input().strip())
+arr = [int(input().strip()) for _ in range(m)]
+print(minTAs(n, m, k, arr))
